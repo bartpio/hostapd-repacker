@@ -1,0 +1,29 @@
+--- orig/src/ap/ieee802_11_ht.c	2019-01-28 08:05:09.000000000 -0500
++++ patt/src/ap/ieee802_11_ht.c	2021-05-03 16:39:50.123053641 -0400
+@@ -348,8 +348,9 @@
+ 	}
+ 	wpa_printf(MSG_DEBUG, "is_ht40_allowed=%d num_sta_ht40_intolerant=%d",
+ 		   is_ht40_allowed, iface->num_sta_ht40_intolerant);
+ 
++	is_ht40_allowed = 1; /* let's always allow :) */
+ 	if (!is_ht40_allowed &&
+ 	    (iface->drv_flags & WPA_DRIVER_FLAGS_HT_2040_COEX)) {
+ 		if (iface->conf->secondary_channel) {
+ 			hostapd_logger(hapd, mgmt->sa,
+
+
+
+
+--- orig/src/ap/hw_features.c	2019-01-28 08:05:09.000000000 -0500
++++ patt/src/ap/hw_features.c	2021-05-03 16:39:10.124175641 -0400
+@@ -315,9 +315,9 @@
+ 			   "channel pri=%d sec=%d based on overlapping BSSes",
+ 			   iface->conf->channel,
+ 			   iface->conf->channel +
+ 			   iface->conf->secondary_channel * 4);
+-		iface->conf->secondary_channel = 0;
++		//iface->conf->secondary_channel = 0;
+ 		if (iface->drv_flags & WPA_DRIVER_FLAGS_HT_2040_COEX) {
+ 			/*
+ 			 * TODO: Could consider scheduling another scan to check
+ 			 * if channel width can be changed if no coex reports
